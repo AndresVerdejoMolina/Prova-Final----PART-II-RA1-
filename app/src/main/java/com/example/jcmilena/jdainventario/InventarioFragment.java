@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class InventarioFragment extends Fragment {
         miRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         miRecycler.addItemDecoration(divider);
+
         miAdapter = new EquiposAdapter(equipos);
         miRecycler.setAdapter(miAdapter);
 
@@ -125,7 +127,16 @@ public class InventarioFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 1;
+            return equiposInformaticos.size();
+        }
+
+        public class EquipoHolder extends RecyclerView.ViewHolder{
+            TextView fabricante, modelo, mac, aula;
+
+            public EquipoHolder(LayoutInflater layoutInflater, ViewGroup parent){
+                super(layoutInflater.inflate(R.layout.fragment_inventario, parent, false));
+
+            }
         }
     }
 

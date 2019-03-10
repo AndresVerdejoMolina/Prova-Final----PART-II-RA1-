@@ -58,7 +58,7 @@ public class ControllerActivity extends AppCompatActivity implements AddEquipoFr
             values.put(MiBBDD_Schema.EntradaBBDD.COLUMNA3, equipo.getMAC());
             values.put(MiBBDD_Schema.EntradaBBDD.COLUMNA4, equipo.getAula());
             long newRowid = db.insert(MiBBDD_Schema.EntradaBBDD.TABLE_NAME, null, values);
-
+            db.close();
             Toast toast = Toast.makeText(this, "Se han añanido correctamente a la base de datos " + MiBBDD_Schema.EntradaBBDD.TABLE_NAME, Toast.LENGTH_LONG);
             toast.show();
 
@@ -85,7 +85,7 @@ public class ControllerActivity extends AppCompatActivity implements AddEquipoFr
         SQLiteDatabase db = dbhelp.getWritableDatabase();
         String[] valores = new String[]{valor};
         String selection="";
-        EquipoInformatico nuevo=null;
+        String[] busqueda = null;
 
         if(columna.equals("fabricante")) {//Si esta buscando por fabricante
             selection = MiBBDD_Schema.EntradaBBDD.COLUMNA1 + " = ?";
@@ -107,15 +107,15 @@ public class ControllerActivity extends AppCompatActivity implements AddEquipoFr
                 String mac = cursor.getString(2);
                 String aula = cursor.getString(3);
 
-                nuevo = new EquipoInformatico(fabricante, modelo, mac, aula);
+                busqueda = new String[]{fabricante, modelo, mac, aula};
             } while (cursor.moveToNext());
 
         } else {
             Toast toast = Toast.makeText(this, "No se ha encontrado nada en la tabla " + MiBBDD_Schema.EntradaBBDD.TABLE_NAME, Toast.LENGTH_LONG);
             toast.show();
-            return;
 
         }
+        db.close();
         Toast toast = Toast.makeText(this, cursor.getCount()+" rows in set (0.02 sec)", Toast.LENGTH_LONG);
         toast.show();
 
